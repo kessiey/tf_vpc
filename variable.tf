@@ -36,3 +36,14 @@ variable "map_public_ip_on_launch" {
   description = "Should be false if you do not want to auto-assign public IP on launch."
   default     = true
 }
+
+# Variable: tags
+variable "instance_ips" {
+  description = "The IPs to use for your instances"
+  default     = ["10.0.1.20", "10.0.1.21"]
+}
+
+# Variable: owner_tags
+variable "owner_tag" {
+  default = ["team1", "team2"]
+}
