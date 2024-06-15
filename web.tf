@@ -5,7 +5,7 @@ provider "aws" {
 
 # Module: VPC Basic
 module "vpc_basic" {
-  source        = "github.com/kessiey/tf_vpc.git?ref=v0.0.1"  # Ensure this path is correct
+  source        = "github.com/kessiey/tf_vpc.git?ref=v0.0.1" # Ensure this path is correct
   name          = "web"
   cidr          = "10.0.0.0/16"
   public_subnet = "10.0.1.0/24"
@@ -33,9 +33,9 @@ resource "aws_instance" "web" {
 
 # Resource: AWS ELB for Web
 resource "aws_elb" "web" {
-  name             = "web-elb"
-  subnets          = [module.vpc_basic.public_subnet_id]
-  security_groups  = [aws_security_group.web_inbound_sg.id]
+  name            = "web-elb"
+  subnets         = [module.vpc_basic.public_subnet_id]
+  security_groups = [aws_security_group.web_inbound_sg.id]
 
   listener {
     instance_port     = 80
