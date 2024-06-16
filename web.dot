@@ -1,0 +1,31 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  "aws_elb.web" [label="aws_elb.web"];
+  "aws_instance.web" [label="aws_instance.web"];
+  "aws_internet_gateway.tfb" [label="aws_internet_gateway.tfb"];
+  "aws_route.internet_access" [label="aws_route.internet_access"];
+  "aws_security_group.web_host_sg" [label="aws_security_group.web_host_sg"];
+  "aws_security_group.web_inbound_sg" [label="aws_security_group.web_inbound_sg"];
+  "aws_subnet.public" [label="aws_subnet.public"];
+  "aws_vpc.tfb" [label="aws_vpc.tfb"];
+  subgraph "cluster_module.vpc_basic" {
+    label = "module.vpc_basic"
+    fontname = "sans-serif"
+    "module.vpc_basic.aws_internet_gateway.tfb" [label="aws_internet_gateway.tfb"];
+    "module.vpc_basic.aws_route.internet_access" [label="aws_route.internet_access"];
+    "module.vpc_basic.aws_subnet.public" [label="aws_subnet.public"];
+    "module.vpc_basic.aws_vpc.tfb" [label="aws_vpc.tfb"];
+  }
+  "aws_elb.web" -> "aws_instance.web";
+  "aws_instance.web" -> "aws_security_group.web_inbound_sg";
+  "aws_instance.web" -> "module.vpc_basic.aws_subnet.public";
+  "aws_internet_gateway.tfb" -> "aws_vpc.tfb";
+  "aws_route.internet_access" -> "aws_internet_gateway.tfb";
+  "aws_security_group.web_host_sg" -> "module.vpc_basic.aws_vpc.tfb";
+  "aws_security_group.web_inbound_sg" -> "module.vpc_basic.aws_vpc.tfb";
+  "aws_subnet.public" -> "aws_vpc.tfb";
+  "module.vpc_basic.aws_internet_gateway.tfb" -> "module.vpc_basic.aws_vpc.tfb";
+  "module.vpc_basic.aws_route.internet_access" -> "module.vpc_basic.aws_internet_gateway.tfb";
+  "module.vpc_basic.aws_subnet.public" -> "module.vpc_basic.aws_vpc.tfb";
+}
