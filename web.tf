@@ -29,7 +29,7 @@ resource "aws_instance" "web" {
   }
   
   count = length(var.instance_ips)
-}
+}  # End of AWS EC2 Instance for Web
 
 # Resource: AWS Elastic Load Balancer (ELB)
 resource "aws_elb" "web" {
@@ -45,9 +45,9 @@ resource "aws_elb" "web" {
   }
   
   instances = aws_instance.web[*].id
-}
+}  # End of AWS Elastic Load Balancer (ELB)
 
-# Resource: AWS Security Groups
+# Resource: AWS Security Group for inbound traffic
 resource "aws_security_group" "web_inbound_sg" {
   name        = "web_inbound"
   description = "Allow HTTP and ICMP from Anywhere"
@@ -73,8 +73,9 @@ resource "aws_security_group" "web_inbound_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
+}  # End of AWS Security Group for inbound traffic
 
+# Resource: AWS Security Group for web host
 resource "aws_security_group" "web_host_sg" {
   name        = "web_host"
   description = "Allow SSH and HTTP to web hosts"
@@ -107,4 +108,4 @@ resource "aws_security_group" "web_host_sg" {
     protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
+}  # End of AWS Security Group for web host
