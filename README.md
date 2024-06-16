@@ -16,6 +16,10 @@ module "vpc_basic" {
 }
 ```
 
+
+![Screenshot 2024-06-16 002732](https://github.com/kessiey/tf_vpc/assets/122237149/b95e2ada-3517-4b4c-9125-289a83557e8a)
+
+
 See `interface.tf` for additional configurable variables.
 
 ## License
